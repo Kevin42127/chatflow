@@ -5,11 +5,11 @@
     "version": "1.0.0",
     "orientation": "portrait",
     "userInterfaceStyle": "automatic",
-    "icon": "./assets/android/res/mipmap-xxxhdpi/ic_launcher.png",
+    "icon": "./assets/android/play_store_512.png",
     "splash": {
       "backgroundColor": "#FFFFFF",
       "resizeMode": "contain",
-      "image": "./assets/android/res/mipmap-xxxhdpi/ic_launcher.png"
+      "image": "./assets/android/play_store_512.png"
     },
     "assetBundlePatterns": [
       "**/*"
@@ -21,10 +21,9 @@
     },
     "android": {
       "package": "com.chatflow.app",
-      "icon": "./assets/android/res/mipmap-xxxhdpi/ic_launcher.png",
+      "icon": "./assets/android/play_store_512.png",
       "adaptiveIcon": {
-        "foregroundImage": "./assets/android/res/mipmap-anydpi-v26/ic_launcher_foreground.png",
-        "backgroundImage": "./assets/android/res/mipmap-anydpi-v26/ic_launcher_background.png",
+        "foregroundImage": "./assets/android/play_store_512.png",
         "backgroundColor": "#FFFFFF"
       }
     },
