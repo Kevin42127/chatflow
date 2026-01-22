@@ -1,27 +1,12 @@
-name: Build and Deploy Mobile App
+name: Build Android APK
 
 on:
   push:
     branches: [ main, master ]
-  pull_request:
-    branches: [ main, master ]
-  workflow_dispatch:
-    inputs:
-      build_android:
-        description: 'Build Android APK'
-        required: false
-        default: true
-        type: boolean
-      build_ios:
-        description: 'Build iOS IPA'
-        required: false
-        default: false
-        type: boolean
 
 jobs:
   build-android:
     runs-on: ubuntu-latest
-    if: github.event.inputs.build_android == 'true' || github.event_name == 'push'
     
     steps:
       - name: Checkout repository
@@ -36,15 +21,6 @@ jobs:
 
       - name: Setup Expo CLI
         run: npm install -g @expo/cli eas-cli
-
-      - name: Setup Java
-        uses: actions/setup-java@v4
-        with:
-          distribution: 'temurin'
-          java-version: '17'
-
-      - name: Setup Android SDK
-        uses: android-actions/setup-android@v3
 
       - name: Install dependencies
         working-directory: ./mobile
@@ -61,58 +37,3 @@ jobs:
         run: eas build --platform android --profile preview --non-interactive
         env:
           EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
-
-  build-ios:
-    runs-on: macos-latest
-    if: github.event.inputs.build_ios == 'true'
-    
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '18'
-          cache: 'npm'
-          cache-dependency-path: mobile/package-lock.json
-
-      - name: Setup Expo CLI
-        run: npm install -g @expo/cli eas-cli
-
-      - name: Install dependencies
-        working-directory: ./mobile
-        run: npm install
-
-      - name: Setup Xcode
-        uses: maxim-lobanov/setup-xcode@v1
-        with:
-          xcode-version: latest-stable
-
-      - name: Login to Expo
-        working-directory: ./mobile
-        run: eas login --non-interactive
-        env:
-          EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
-
-      - name: Build iOS IPA
-        working-directory: ./mobile
-        run: eas build --platform ios --profile preview --non-interactive
-        env:
-          EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
-
-  deploy-backend:
-    runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master'
-    
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Deploy to Vercel
-        uses: amondnet/vercel-action@v25
-        with:
-          vercel-token: ${{ secrets.VERCEL_TOKEN }}
-          vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
-          vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
-          working-directory: ./
