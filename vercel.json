@@ -1,7 +1,7 @@
 # Backend Vercel Configuration
 {
   "version": 2,
-  "name": "chatflow-kevin",
+  "name": "chatflow-app-kevin",
   "builds": [
     {
       "src": "backend/server.js",
