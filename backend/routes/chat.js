@@ -1,29 +1,6 @@
 const express = require('express');
 const router = express.Router();
 
-// 使用限制存儲（實際應用中應使用數據庫）
-const userUsage = new Map(); // userId -> { count, date }
-
-const DAILY_LIMIT = 20;
-
-function checkUsageLimit(userId) {
-  const today = new Date().toDateString();
-  const usage = userUsage.get(userId);
-  
-  if (!usage || usage.date !== today) {
-    // 新的一天或新用戶
-    userUsage.set(userId, { count: 1, date: today });
-    return { allowed: true, remaining: DAILY_LIMIT - 1 };
-  }
-  
-  if (usage.count >= DAILY_LIMIT) {
-    return { allowed: false, remaining: 0 };
-  }
-  
-  usage.count++;
-  return { allowed: true, remaining: DAILY_LIMIT - usage.count };
-}
-
 function detectLanguage(text) {
   if (!text || text.length === 0) return 'en';
   
@@ -79,22 +56,10 @@ function cleanText(text) {
 
 router.post('/chat', async (req, res) => {
   try {
-    const { messages, userId } = req.body;
+    const { messages } = req.body;
 
     if (!messages || !Array.isArray(messages)) {
       return res.status(400).json({ error: 'Messages array is required' });
-    }
-
-    // 檢查使用限制
-    const userIdToUse = userId || 'anonymous';
-    const usageCheck = checkUsageLimit(userIdToUse);
-    
-    if (!usageCheck.allowed) {
-      return res.status(429).json({ 
-        error: 'Daily usage limit exceeded',
-        remaining: usageCheck.remaining,
-        limit: DAILY_LIMIT
-      });
     }
 
     const GROQ_API_KEY = process.env.GROQ_API_KEY;
@@ -165,35 +130,12 @@ router.post('/chat', async (req, res) => {
           content: cleanedContent
         }
       }],
-      detectedLanguage,
-      usage: {
-        remaining: usageCheck.remaining,
-        limit: DAILY_LIMIT
-      }
+      detectedLanguage
     });
   } catch (error) {
     console.error('Chat route error:', error);
     res.status(500).json({ error: 'Internal server error', details: error.message });
   }
-});
-
-// 查詢使用次數API
-router.get('/usage', (req, res) => {
-  const { userId } = req.query;
-  const userIdToUse = userId || 'anonymous';
-  const today = new Date().toDateString();
-  const usage = userUsage.get(userIdToUse);
-  
-  let remaining = DAILY_LIMIT;
-  if (usage && usage.date === today) {
-    remaining = DAILY_LIMIT - usage.count;
-  }
-  
-  res.json({
-    remaining,
-    limit: DAILY_LIMIT,
-    used: DAILY_LIMIT - remaining
-  });
 });
 
 module.exports = router;
