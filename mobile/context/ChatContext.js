@@ -1,5 +1,5 @@
 import React, { createContext, useState, useEffect, useContext } from 'react';
-import { sendMessage as apiSendMessage, getUsage } from '../services/api';
+import { sendMessage as apiSendMessage } from '../services/api';
 import { saveChatHistory, loadChatHistory, clearChatHistory as clearStorage } from '../services/storage';
 
 const ChatContext = createContext();
@@ -16,11 +16,9 @@ export const ChatProvider = ({ children }) => {
   const [messages, setMessages] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  const [usage, setUsage] = useState({ remaining: 20, limit: 20, used: 0 });
 
   useEffect(() => {
     loadHistory();
-    loadUsage();
   }, []);
 
   useEffect(() => {
@@ -28,15 +26,6 @@ export const ChatProvider = ({ children }) => {
       saveChatHistory(messages);
     }
   }, [messages]);
-
-  const loadUsage = async () => {
-    try {
-      // 暫時禁用使用限制檢查
-      console.log('Usage check disabled temporarily');
-    } catch (error) {
-      console.error('Failed to load usage:', error);
-    }
-  };
 
   const loadHistory = async () => {
     const history = await loadChatHistory();
@@ -47,12 +36,6 @@ export const ChatProvider = ({ children }) => {
 
   const sendMessage = async (content) => {
     if (!content.trim()) return;
-
-    // 暫時禁用使用限制檢查
-    // if (usage.remaining <= 0) {
-    //   setError('今日使用次數已用完，請明天再試');
-    //   return;
-    // }
 
     const userMessage = {
       role: 'user',
@@ -78,27 +61,15 @@ export const ChatProvider = ({ children }) => {
       };
 
       setMessages((prev) => [...prev, aiMessage]);
-      
-      // 暫時禁用使用次數更新
-      // if (response.usage) {
-      //   setUsage(response.usage);
-      // } else {
-      //   await loadUsage();
-      // }
     } catch (err) {
-      if (err.code === 'USAGE_LIMIT_EXCEEDED') {
-        setError(`今日使用次數已用完 (${err.limit}/${err.limit})`);
-        setUsage({ remaining: err.remaining, limit: err.limit, used: err.limit - err.remaining });
-      } else {
-        setError(err.message);
-        const errorMessage = {
-          role: 'assistant',
-          content: `錯誤: ${err.message}`,
-          timestamp: new Date().toISOString(),
-          isError: true,
-        };
-        setMessages((prev) => [...prev, errorMessage]);
-      }
+      setError(err.message);
+      const errorMessage = {
+        role: 'assistant',
+        content: `錯誤: ${err.message}`,
+        timestamp: new Date().toISOString(),
+        isError: true,
+      };
+      setMessages((prev) => [...prev, errorMessage]);
     } finally {
       setLoading(false);
     }
@@ -115,10 +86,8 @@ export const ChatProvider = ({ children }) => {
         messages,
         loading,
         error,
-        usage,
         sendMessage,
         clearChatHistory,
-        loadUsage,
       }}
     >
       {children}
