@@ -25,6 +25,7 @@ export const sendMessage = async (messages) => {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({ messages, userId }),
+      timeout: 30000, // 30 秒超時
     });
 
     if (!response.ok) {
@@ -53,7 +54,9 @@ export const sendMessage = async (messages) => {
 export const getUsage = async () => {
   try {
     const userId = await getUserId();
-    const response = await fetch(`${API_BASE_URL}/api/usage?userId=${userId}`);
+    const response = await fetch(`${API_BASE_URL}/api/usage?userId=${userId}`, {
+      timeout: 10000, // 10 秒超時
+    });
     
     if (!response.ok) {
       throw new Error('Failed to get usage info');
