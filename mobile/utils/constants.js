@@ -1,6 +1,4 @@
-export const API_BASE_URL = __DEV__ 
-  ? 'http://192.168.50.200:3000' 
-  : 'https://chatflowk-kevin.vercel.app';
+export const API_BASE_URL = 'https://chatflowk-kevin.vercel.app';
 
 export const STORAGE_KEYS = {
   CHAT_HISTORY: '@chat_history',
