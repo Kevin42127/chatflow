@@ -3,9 +3,11 @@ import { View, TextInput, TouchableOpacity, StyleSheet, Platform, KeyboardAvoidi
 import { Ionicons } from '@expo/vector-icons';
 import { useTheme } from '../context/ThemeContext';
 import { platformStyles, getPlatformStyle } from '../utils/platformStyles';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 const ChatInput = ({ onSend, loading }) => {
   const { colors, t } = useTheme();
+  const insets = useSafeAreaInsets();
   const [text, setText] = useState('');
   const [focused, setFocused] = useState(false);
 
@@ -21,7 +23,7 @@ const ChatInput = ({ onSend, loading }) => {
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
       style={styles.wrapper}
     >
-      <View style={[styles.container, { paddingBottom: 30 }]}>
+      <View style={[styles.container, { paddingBottom: Platform.OS === 'android' ? insets.bottom + 20 : 30 }]}>
         <View style={[styles.inputContainer, focused && styles.inputFocused, { backgroundColor: colors.surface, borderColor: colors.border }]}>
           <TextInput
             style={[styles.input, { color: colors.text, borderBottomColor: focused ? colors.border : 'transparent' }]}

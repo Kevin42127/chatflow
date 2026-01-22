@@ -7,9 +7,9 @@
     "userInterfaceStyle": "automatic",
     "icon": "./assets/android-logo.png",
     "splash": {
-      "backgroundColor": "transparent",
+      "backgroundColor": "#FFFFFF",
       "resizeMode": "contain",
-      "image": ""
+      "image": "./assets/android-logo.png"
     },
     "assetBundlePatterns": [
       "**/*"
@@ -20,8 +20,17 @@
       "icon": "./assets/ios-apple icon.png"
     },
     "android": {
-      "package": "com.chatflow.app"
+      "package": "com.chatflow.app",
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/android-logo.png",
+        "backgroundColor": "#FFFFFF"
+      }
     },
-    "web": {}
+    "web": {},
+    "extra": {
+      "eas": {
+        "projectId": "a7036f4e-1f73-40ea-9c51-854903a3607e"
+      }
+    }
   }
 }
