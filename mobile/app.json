@@ -5,11 +5,11 @@
     "version": "1.0.0",
     "orientation": "portrait",
     "userInterfaceStyle": "automatic",
-    "icon": "./assets/android-logo.png",
+    "icon": "./assets/android/play_store_512.png",
     "splash": {
       "backgroundColor": "#FFFFFF",
       "resizeMode": "contain",
-      "image": "./assets/android-logo.png"
+      "image": "./assets/android/play_store_512.png"
     },
     "assetBundlePatterns": [
       "**/*"
@@ -17,12 +17,13 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.chatflow.app",
-      "icon": "./assets/ios-apple icon.png"
+      "icon": "./assets/ios"
     },
     "android": {
       "package": "com.chatflow.app",
+      "icon": "./assets/android/play_store_512.png",
       "adaptiveIcon": {
-        "foregroundImage": "./assets/android-logo.png",
+        "foregroundImage": "./assets/android/play_store_512.png",
         "backgroundColor": "#FFFFFF"
       }
     },
