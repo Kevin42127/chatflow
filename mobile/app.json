@@ -1,0 +1,27 @@
+{
+  "expo": {
+    "name": "ChatFlow",
+    "slug": "chatflow",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "automatic",
+    "icon": "./assets/android-logo.png",
+    "splash": {
+      "backgroundColor": "transparent",
+      "resizeMode": "contain",
+      "image": ""
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.chatflow.app",
+      "icon": "./assets/ios-apple icon.png"
+    },
+    "android": {
+      "package": "com.chatflow.app"
+    },
+    "web": {}
+  }
+}
