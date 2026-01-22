@@ -39,14 +39,8 @@ jobs:
         with:
           xcode-version: latest-stable
 
-      - name: Login to Expo
-        working-directory: ./mobile
-        run: eas login --non-interactive
-        env:
-          EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
-
       - name: Build iOS IPA
         working-directory: ./mobile
-        run: eas build --platform ios --profile preview --non-interactive
+        run: eas build --platform ios --profile preview
         env:
           EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
