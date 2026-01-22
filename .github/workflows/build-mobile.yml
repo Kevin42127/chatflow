@@ -30,6 +30,12 @@ jobs:
       - name: Setup Expo CLI
         run: npm install -g @expo/cli eas-cli
 
+      - name: Create .expo directory
+        run: mkdir -p ~/.expo
+
+      - name: Save Expo token
+        run: echo "${{ secrets.EXPO_TOKEN }}" > ~/.expo/auth.json
+
       - name: Install dependencies
         working-directory: ./mobile
         run: npm install
@@ -42,5 +48,3 @@ jobs:
       - name: Build iOS IPA
         working-directory: ./mobile
         run: eas build --platform ios --profile preview
-        env:
-          EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
