@@ -4,17 +4,10 @@ on:
   push:
     branches: [ main, master ]
   workflow_dispatch:
-    inputs:
-      build_ios:
-        description: 'Build iOS IPA'
-        required: false
-        default: true
-        type: boolean
 
 jobs:
   build-ios:
     runs-on: macos-latest
-    if: github.event.inputs.build_ios == 'true' || github.event_name == 'push'
     
     steps:
       - name: Checkout repository
@@ -30,12 +23,6 @@ jobs:
       - name: Setup Expo CLI
         run: npm install -g @expo/cli eas-cli
 
-      - name: Create .expo directory
-        run: mkdir -p ~/.expo
-
-      - name: Save Expo token
-        run: echo "${{ secrets.EXPO_TOKEN }}" > ~/.expo/auth.json
-
       - name: Install dependencies
         working-directory: ./mobile
         run: npm install
@@ -45,6 +32,10 @@ jobs:
         with:
           xcode-version: latest-stable
 
-      - name: Build iOS IPA
+      - name: Build iOS IPA with token
         working-directory: ./mobile
-        run: eas build --platform ios --profile preview
+        run: |
+          export EXPO_TOKEN="${{ secrets.EXPO_TOKEN }}"
+          eas build --platform ios --profile preview
+        env:
+          EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
