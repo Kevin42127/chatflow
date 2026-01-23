@@ -68,16 +68,22 @@ jobs:
           EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
         run: |
           if [ -z "$EXPO_TOKEN" ]; then
-            echo "錯誤: EXPO_TOKEN 未設定"
-            echo "請在 GitHub Repository Settings → Secrets 中新增 EXPO_TOKEN"
+            echo "❌ 錯誤: EXPO_TOKEN 未設定"
+            echo "請在 GitHub Repository Settings → Secrets and variables → Actions 中新增 EXPO_TOKEN"
             exit 1
           fi
-          eas whoami || true
+          echo "✓ EXPO_TOKEN 已設定（長度: ${#EXPO_TOKEN} 字元）"
+          echo "正在檢查 EAS 登入狀態..."
+          eas whoami || echo "⚠️ 無法取得使用者資訊，將嘗試登入"
 
       - name: Login to EAS
         env:
           EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
-        run: eas login --non-interactive
+        run: |
+          echo "正在登入 EAS..."
+          eas login --non-interactive
+          echo "✓ EAS 登入成功"
+          eas whoami
 
       - name: Build app
         env:
