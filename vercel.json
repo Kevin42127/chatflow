@@ -7,17 +7,15 @@
       "use": "@vercel/node"
     }
   ],
-  "routes": [
+  "rewrites": [
     {
-      "src": "/api/(.*)",
-      "dest": "/backend/server.js"
+      "source": "/api/(.*)",
+      "destination": "/backend/server.js"
     },
     {
-      "src": "/health",
-      "dest": "/backend/server.js"
-    }
-  ],
-  "rewrites": [
+      "source": "/health",
+      "destination": "/backend/server.js"
+    },
     {
       "source": "/download",
       "destination": "/download.html"
