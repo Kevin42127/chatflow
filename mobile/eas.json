@@ -14,7 +14,9 @@
         "buildType": "apk"
       },
       "ios": {
-        "buildConfiguration": "Release"
+        "buildConfiguration": "Release",
+        "simulator": false,
+        "credentialsSource": "auto"
       }
     },
     "production": {
