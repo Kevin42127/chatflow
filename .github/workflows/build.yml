@@ -1,0 +1,106 @@
+name: EAS Build
+
+on:
+  push:
+    branches:
+      - master
+      - main
+    paths:
+      - 'mobile/**'
+  pull_request:
+    branches:
+      - master
+      - main
+    paths:
+      - 'mobile/**'
+  workflow_dispatch:
+    inputs:
+      platform:
+        description: '建置平台'
+        required: true
+        default: 'ios'
+        type: choice
+        options:
+          - ios
+          - android
+      profile:
+        description: '建置設定檔'
+        required: true
+        default: 'preview'
+        type: choice
+        options:
+          - preview
+          - production
+          - development
+
+jobs:
+  build:
+    name: Build ${{ github.event.inputs.platform || 'ios' }}
+    runs-on: macos-latest
+    timeout-minutes: 60
+    
+    defaults:
+      run:
+        working-directory: ./mobile
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18.x'
+          cache: 'npm'
+          cache-dependency-path: mobile/package-lock.json
+
+      - name: Install EAS CLI
+        run: npm install -g eas-cli@latest
+
+      - name: Verify EAS CLI
+        run: eas --version
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Check EAS login status
+        env:
+          EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
+        run: |
+          if [ -z "$EXPO_TOKEN" ]; then
+            echo "錯誤: EXPO_TOKEN 未設定"
+            echo "請在 GitHub Repository Settings → Secrets 中新增 EXPO_TOKEN"
+            exit 1
+          fi
+          eas whoami || true
+
+      - name: Login to EAS
+        env:
+          EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
+        run: eas login --non-interactive
+
+      - name: Build app
+        env:
+          EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
+        run: |
+          PLATFORM="${{ github.event.inputs.platform || 'ios' }}"
+          PROFILE="${{ github.event.inputs.profile || 'preview' }}"
+          echo "開始打包 $PLATFORM (設定檔: $PROFILE)..."
+          eas build --platform $PLATFORM --profile $PROFILE --non-interactive --wait
+
+      - name: Get build info
+        if: always()
+        env:
+          EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
+        run: |
+          PLATFORM="${{ github.event.inputs.platform || 'ios' }}"
+          eas build:list --platform $PLATFORM --limit 1 --json > build-info.json
+          cat build-info.json
+
+      - name: Upload build info
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-info-${{ github.event.inputs.platform || 'ios' }}
+          path: mobile/build-info.json
+          retention-days: 30

@@ -40,7 +40,7 @@ software2/
 git push origin main
 ```
 
-### CI/CD 自動打包 (Azure DevOps)
+### CI/CD 自動打包 (GitHub Actions)
 
 #### 快速開始
 
@@ -48,66 +48,43 @@ git push origin main
 - 前往 [Expo 帳號設定](https://expo.dev/accounts/[你的帳號]/settings/access-tokens)
 - 建立新的 Token 並複製
 
-**2. 在 Azure DevOps 設定**
+**2. 設定 GitHub Secrets**
 
-**方式一：使用 Pipeline 變數（推薦，更簡單）**
-
-1. 登入 [dev.azure.com](https://dev.azure.com)
-2. 建立新專案或選擇現有專案
-3. 連接 GitHub Repository：`https://github.com/Kevin42127/chatflow`
-4. 建立 Pipeline：
-   - 前往「Pipelines」→「Pipelines」→「Create Pipeline」
-   - 選擇「Existing Azure Pipelines YAML file」
-   - 選擇分支 `master` 和檔案 `azure-pipelines-no-vargroup.yml`
-5. 設定 Pipeline 變數：
-   - 在 Pipeline 編輯頁面，點擊右上角「...」→「Variables」
-   - 點擊「+」新增變數：
-     - 名稱：`EXPO_TOKEN`
-     - 值：貼上你的 Expo Token
-     - **勾選「Keep this value secret」**
-   - 點擊「Save」
-
-**方式二：使用變數群組**
-
-1. 登入 [dev.azure.com](https://dev.azure.com)
-2. 建立新專案或選擇現有專案
-3. 連接 GitHub Repository：`https://github.com/Kevin42127/chatflow`
-4. 建立變數群組：
-   - 前往「Pipelines」→「Library」
-   - 建立變數群組 `expo-variables`
-   - 新增變數 `EXPO_TOKEN`（勾選「Keep this value secret」）
-5. 建立 Pipeline：
-   - 前往「Pipelines」→「Pipelines」→「Create Pipeline」
-   - 選擇「Existing Azure Pipelines YAML file」
-   - 選擇分支 `master` 和檔案 `azure-pipelines.yml`
-   - **重要**：在 Pipeline 設定中授權使用 `expo-variables` 變數群組：
-     - 點擊右上角「...」→「Security」
-     - 找到「Variable groups」區塊
-     - 點擊「+」新增 `expo-variables` 群組
-     - 確認已勾選並點擊「Save」
+1. 前往 GitHub Repository：`https://github.com/Kevin42127/chatflow`
+2. 點擊「Settings」→「Secrets and variables」→「Actions」
+3. 點擊「New repository secret」
+4. 新增 Secret：
+   - **Name**: `EXPO_TOKEN`
+   - **Value**: 貼上你的 Expo Token
+5. 點擊「Add secret」
 
 **3. 執行建置**
 
-- 點擊「Run pipeline」手動執行
-- 或推送程式碼到 `master` 分支自動觸發
-- 選擇平台：`ios`、`android` 或 `all`
-- 選擇設定檔：`preview`、`production` 或 `development`
+**自動觸發：**
+- 推送程式碼到 `master` 或 `main` 分支（且 `mobile/` 目錄有變更）
+- 建立 Pull Request 到 `master` 或 `main` 分支
 
-#### 詳細設定指南
-
-完整的設定步驟請參考：[AZURE_DEVOPS_SETUP.md](./AZURE_DEVOPS_SETUP.md)
+**手動觸發：**
+1. 前往 GitHub Repository →「Actions」標籤
+2. 選擇「EAS Build」workflow
+3. 點擊「Run workflow」
+4. 選擇：
+   - **平台**: `ios` 或 `android`
+   - **設定檔**: `preview`、`production` 或 `development`
+5. 點擊「Run workflow」
 
 #### 建置參數
 
-- **平台**: `all` / `android` / `ios`
+- **平台**: `ios` / `android`
 - **設定檔**: `preview` / `production` / `development`
 
 #### 注意事項
 
-- 需要 Mac 代理（`macos-latest`）進行 iOS 打包
-- 確保 `EXPO_TOKEN` 已正確設定並設為 Secret
+- 使用 GitHub Actions 的 macOS runner（免費額度：每月 2000 分鐘）
+- 確保 `EXPO_TOKEN` 已正確設定在 Repository Secrets 中
 - 建置會自動等待完成（`--wait` 參數）
 - 建置結果可在 Expo 網站查看
+- 建置資訊會自動上傳為 Artifact，保留 30 天
 
 ### 手機應用打包（雲端 Mac）
 
