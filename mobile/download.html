@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ChatFlow - 下載應用程式</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="download.css">
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <header class="navbar">
+        <div class="navbar-container">
+            <div class="navbar-brand">
+                <span class="brand-text">ChatFlow</span>
+            </div>
+            <button class="nav-toggle" id="navToggle">
+                <span class="material-icons">menu</span>
+            </button>
+            <nav class="navbar-nav">
+                <a href="#features" class="nav-link">功能</a>
+                <a href="#download" class="nav-link">下載</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-container">
+            <div class="hero-content">
+                <h1 class="hero-title">ChatFlow</h1>
+                <p class="hero-subtitle">智慧對話，流暢體驗</p>
+                <p class="hero-description">
+                </p>
+                <div class="hero-buttons">
+                    <button class="btn btn-primary btn-large" onclick="scrollToDownload()">
+                        立即下載
+                    </button>
+                    <button class="btn btn-secondary btn-large" onclick="scrollToFeatures()">
+                        了解更多
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="features">
+        <div class="container">
+            <h2 class="section-title">核心功能</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <span class="material-icons">chat</span>
+                    </div>
+                    <h3 class="feature-title">AI 智慧對話</h3>
+                    <p class="feature-description">
+                        採用先進 AI 技術，提供自然流暢的對話體驗，支援各種主題討論
+                    </p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <span class="material-icons">dark_mode</span>
+                    </div>
+                    <h3 class="feature-title">深色模式</h3>
+                    <p class="feature-description">
+                        支援明暗主題切換，保護您的眼睛，適合各種使用環境
+                    </p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <span class="material-icons">language</span>
+                    </div>
+                    <h3 class="feature-title">多語言支援</h3>
+                    <p class="feature-description">
+                        支援繁體中文和英文，打破語言障礙，提供本土化體驗
+                    </p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <span class="material-icons">history</span>
+                    </div>
+                    <h3 class="feature-title">對話紀錄</h3>
+                    <p class="feature-description">
+                        自動保存對話歷史，隨時查看過往討論，支援一鍵清除功能
+                    </p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <span class="material-icons">speed</span>
+                    </div>
+                    <h3 class="feature-title">極速響應</h3>
+                    <p class="feature-description">
+                        優化的網路架構和演算法，提供毫秒級響應速度
+                    </p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <span class="material-icons">touch_app</span>
+                    </div>
+                    <h3 class="feature-title">直覺操作</h3>
+                    <p class="feature-description">
+                        簡潔的使用者介面，支援快速提示，讓對話更加便捷
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Download Section -->
+    <section id="download" class="download">
+        <div class="container">
+            <h2 class="section-title">下載應用程式</h2>
+            <p class="section-subtitle">選擇您的平台，開始智慧對話之旅</p>
+            
+            <!-- App Preview Gallery -->
+            <div class="app-preview-gallery">
+                <div class="preview-images">
+                    <img src="assets/1.jpg" alt="ChatFlow 預覽 1" class="preview-image">
+                    <img src="assets/2.jpg" alt="ChatFlow 預覽 2" class="preview-image">
+                    <img src="assets/3.jpg" alt="ChatFlow 預覽 3" class="preview-image">
+                    <img src="assets/4.jpg" alt="ChatFlow 預覽 4" class="preview-image">
+                </div>
+            </div>
+            
+            <div class="download-grid">
+                <div class="download-card disabled">
+                    <div class="download-icon">
+                        <span class="material-icons">apple</span>
+                    </div>
+                    <h3 class="download-title">iOS 版本</h3>
+                    <p class="download-description">
+                        開發中，敬請期待<br>
+                    </p>
+                    <div class="download-info">
+                    </div>
+                    <button class="btn btn-secondary download-btn" disabled>
+                        <span class="material-icons">schedule</span>
+                        即將推出
+                    </button>
+                </div>
+
+                <div class="download-card">
+                    <div class="download-icon">
+                        <span class="material-icons">android</span>
+                    </div>
+                    <h3 class="download-title">Android 版本</h3>
+                    <p class="download-description">
+                        適用於 Android 設備<br>
+                        Android 7.0 或更高版本
+                    </p>
+                    <div class="download-info">
+                    </div>
+                    <button class="btn btn-primary download-btn" onclick="downloadApp('android')">
+                        <span class="material-icons">download</span>
+                        下載 APK
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-bottom">
+                <p>&copy; 2025 ChatFlow. 版權所有。</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Download Progress Modal -->
+    <div id="downloadModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>正在下載...</h3>
+                <button class="modal-close" onclick="closeModal()">
+                    <span class="material-icons">close</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="progress-container">
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progressFill"></div>
+                    </div>
+                    <span class="progress-text" id="progressText">0%</span>
+                </div>
+                <p class="download-status" id="downloadStatus">正在準備下載...</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="download.js"></script>
+</body>
+</html>
