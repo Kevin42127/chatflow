@@ -104,96 +104,103 @@ body {
 }
 
 .main-content {
-    padding: 48px 32px;
-    max-width: 1200px;
+    padding: 0;
+    max-width: 1400px;
     margin: 0 auto;
     width: 100%;
 }
 
 .download-section {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 48px;
-    margin-bottom: 64px;
-    align-items: start;
+    grid-template-columns: 1fr;
+    gap: 0;
+    margin-bottom: 0;
+    align-items: center;
+    min-height: calc(100vh - 200px);
 }
 
 .app-preview {
-    position: sticky;
-    top: 32px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    gap: 64px;
+    padding: 64px 0;
 }
 
 .phone-mockup {
-    background: var(--card-bg);
-    border-radius: var(--border-radius);
-    padding: 32px;
-    box-shadow: var(--card-shadow);
     text-align: center;
 }
 
 .app-screenshot {
     width: 100%;
-    max-width: 280px;
-    border-radius: 16px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    max-width: 320px;
+    border-radius: 24px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    filter: drop-shadow(0 10px 30px rgba(0, 0, 0, 0.2));
 }
 
 .download-info {
     display: grid;
-    gap: 32px;
+    gap: 40px;
 }
 
 .download-title {
-    font-size: 42px;
+    font-size: 56px;
     font-weight: 700;
     color: white;
-    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    text-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
     line-height: 1.2;
+    margin-bottom: 16px;
 }
 
 .download-description {
-    font-size: 18px;
-    color: rgba(255, 255, 255, 0.9);
+    font-size: 20px;
+    color: rgba(255, 255, 255, 0.95);
     line-height: 1.8;
+    margin-bottom: 8px;
 }
 
 .features-grid {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 16px;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+    margin: 48px 0;
 }
 
 .feature-card {
-    background: var(--card-bg);
-    padding: 24px;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    padding: 32px 24px;
     border-radius: 20px;
-    box-shadow: var(--card-shadow);
+    border: 1px solid rgba(255, 255, 255, 0.2);
     transition: var(--transition);
     text-align: center;
 }
 
 .feature-card:hover {
+    background: rgba(255, 255, 255, 0.15);
     transform: translateY(-4px);
-    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
 }
 
 .feature-icon {
-    font-size: 40px;
-    color: var(--primary-color);
-    margin-bottom: 12px;
+    font-size: 48px;
+    color: white;
+    margin-bottom: 16px;
     display: block;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
 }
 
 .feature-card h3 {
     font-size: 18px;
     font-weight: 600;
     margin-bottom: 8px;
-    color: var(--text-primary);
+    color: white;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 .feature-card p {
     font-size: 14px;
-    color: var(--text-secondary);
+    color: rgba(255, 255, 255, 0.9);
     line-height: 1.6;
 }
 
@@ -241,80 +248,88 @@ body {
 }
 
 .download-instructions {
-    margin-top: 8px;
+    margin-top: 40px;
+    padding: 32px;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border-radius: 24px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 .instruction-card {
-    background: var(--card-bg);
-    padding: 24px;
-    border-radius: 20px;
-    box-shadow: var(--card-shadow);
     display: grid;
     grid-template-columns: auto 1fr;
-    gap: 20px;
+    gap: 24px;
     align-items: start;
 }
 
 .instruction-icon {
-    font-size: 32px;
-    color: var(--primary-color);
+    font-size: 40px;
+    color: white;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
 }
 
 .instruction-content h4 {
-    font-size: 20px;
+    font-size: 24px;
     font-weight: 600;
-    margin-bottom: 12px;
-    color: var(--text-primary);
+    margin-bottom: 16px;
+    color: white;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 .instruction-content ol {
     padding-left: 24px;
-    color: var(--text-secondary);
-    line-height: 2;
+    color: rgba(255, 255, 255, 0.95);
+    line-height: 2.2;
+    font-size: 16px;
 }
 
 .app-details {
-    margin-top: 48px;
+    margin-top: 0;
+    padding: 64px 0;
 }
 
 .details-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 24px;
+    gap: 32px;
 }
 
 .detail-card {
-    background: var(--card-bg);
-    padding: 32px;
-    border-radius: var(--border-radius);
-    box-shadow: var(--card-shadow);
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    padding: 40px 32px;
+    border-radius: 24px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
     text-align: center;
     transition: var(--transition);
 }
 
 .detail-card:hover {
+    background: rgba(255, 255, 255, 0.15);
     transform: translateY(-4px);
-    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
 }
 
 .detail-icon {
-    font-size: 48px;
-    color: var(--primary-color);
-    margin-bottom: 16px;
+    font-size: 56px;
+    color: white;
+    margin-bottom: 20px;
     display: block;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
 }
 
 .detail-card h4 {
-    font-size: 20px;
+    font-size: 22px;
     font-weight: 600;
     margin-bottom: 12px;
-    color: var(--text-primary);
+    color: white;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 .detail-card p {
-    font-size: 15px;
-    color: var(--text-secondary);
-    line-height: 1.6;
+    font-size: 16px;
+    color: rgba(255, 255, 255, 0.9);
+    line-height: 1.8;
 }
 
 .footer {
@@ -406,20 +421,20 @@ body {
 }
 
 @media (max-width: 968px) {
-    .download-section {
-        grid-template-columns: 1fr;
-    }
-
     .app-preview {
-        position: static;
+        grid-template-columns: 1fr;
+        gap: 48px;
+        text-align: center;
     }
 
     .features-grid {
-        grid-template-columns: 1fr;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 16px;
     }
 
     .details-grid {
         grid-template-columns: 1fr;
+        gap: 24px;
     }
 
     .download-buttons {
