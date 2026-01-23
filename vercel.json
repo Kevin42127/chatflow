@@ -15,14 +15,16 @@
     {
       "src": "/health",
       "dest": "/backend/server.js"
+    }
+  ],
+  "rewrites": [
+    {
+      "source": "/download",
+      "destination": "/download.html"
     },
     {
-      "src": "/download",
-      "dest": "/download/index.html"
-    },
-    {
-      "src": "/download/(.*)",
-      "dest": "/download/$1"
+      "source": "/assets/(.*)",
+      "destination": "/mobile/assets/$1"
     }
   ],
   "env": {
