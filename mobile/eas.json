@@ -15,8 +15,7 @@
       },
       "ios": {
         "buildConfiguration": "Release",
-        "simulator": false,
-        "credentialsSource": "auto"
+        "credentialsSource": "remote"
       }
     },
     "production": {
