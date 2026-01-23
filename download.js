@@ -157,20 +157,25 @@ function setupDownloadHandlers() {
 
     // Android 下載
     const androidDownload = () => {
-        // 直接下載 APK 檔案
-        const downloadUrl = 'https://github.com/Kevin42127/chatflow/releases/download/android/chatflow.apk';
+        const downloadUrl = 'https://github.com/Kevin42127/chatflow/releases/latest/download/chatflow.apk';
         
-        // 建立隱藏的下載連結
-        const link = document.createElement('a');
-        link.href = downloadUrl;
-        link.download = 'chatflow.apk';
-        link.style.display = 'none';
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-        
-        // 同時開啟 Releases 頁面作為備用
-        window.open('https://github.com/Kevin42127/chatflow/releases/tag/android', '_blank');
+        fetch(downloadUrl, { method: 'HEAD' })
+            .then(response => {
+                if (response.ok) {
+                    const link = document.createElement('a');
+                    link.href = downloadUrl;
+                    link.download = 'chatflow.apk';
+                    link.style.display = 'none';
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+                } else {
+                    window.location.href = downloadUrl;
+                }
+            })
+            .catch(() => {
+                window.location.href = downloadUrl;
+            });
     };
 
     // 將函數綁定到全域
