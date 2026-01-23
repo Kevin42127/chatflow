@@ -1,0 +1,43 @@
+trigger:
+  branches:
+    include:
+      - master
+      - main
+
+pool:
+  vmImage: 'macos-latest'
+
+variables:
+  EXPO_TOKEN: $(EXPO_TOKEN)
+
+steps:
+- task: NodeTool@0
+  inputs:
+    versionSpec: '18.x'
+  displayName: '安裝 Node.js'
+
+- script: |
+    npm install -g eas-cli
+  displayName: '安裝 EAS CLI'
+
+- script: |
+    cd mobile
+    npm install
+  displayName: '安裝依賴套件'
+
+- script: |
+    cd mobile
+    eas login --non-interactive
+  displayName: '登入 EAS'
+  env:
+    EXPO_TOKEN: $(EXPO_TOKEN)
+
+- script: |
+    cd mobile
+    eas build --platform android --profile preview --non-interactive --wait
+  displayName: '打包 Android APK'
+
+- script: |
+    cd mobile
+    eas build --platform ios --profile preview --non-interactive --wait
+  displayName: '打包 iOS'

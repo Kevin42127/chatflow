@@ -40,13 +40,102 @@ software2/
 git push origin main
 ```
 
-### 手機應用打包
+### CI/CD 自動打包 (Azure Pipelines)
+
+#### 設定步驟
+
+1. **在 Azure DevOps 建立變數**
+   - 建立變數群組 `expo-variables`
+   - 加入變數 `EXPO_TOKEN`（從 Expo 取得）
+
+2. **選擇管線範本**
+   - 選擇 **Starter pipeline**
+   - 或選擇 **Existing Azure Pipelines YAML file** 並選擇 `azure-pipelines.yml`
+
+3. **使用進階版本（推薦）**
+   - 檔案：`azure-pipelines.yml`
+   - 支援參數選擇平台和設定檔
+   - 包含完整的錯誤處理和建置資訊
+
+4. **使用簡化版本**
+   - 檔案：`azure-pipelines-simple.yml`
+   - 固定打包 Android 和 iOS
+   - 使用 preview 設定檔
+
+#### 建置參數（進階版本）
+
+- **平台**: `all` / `android` / `ios`
+- **設定檔**: `preview` / `production` / `development`
+
+#### 注意事項
+
+- 需要 Mac 代理（`macos-latest`）進行 iOS 打包
+- 確保 `EXPO_TOKEN` 已正確設定
+- 建置會自動等待完成（`--wait` 參數）
+
+### 手機應用打包（雲端 Mac）
+
+#### 前置需求
+
+**本地環境（Windows）**
+- VSCode 已安裝 Remote-SSH 擴充功能
+- SSH 設定檔已配置（`~/.ssh/config`）
+
+**雲端 Mac 環境**
+- Node.js 已安裝
+- EAS CLI 已安裝：`npm install -g eas-cli`
+- 已登入 EAS：`eas login`
+
+#### SSH 設定
+
+在 `~/.ssh/config` 中加入：
+```
+Host macincloud
+    HostName [你的 MacinCloud IP 或主機名]
+    User [你的 MacinCloud 用戶名]
+    Port 22
+```
+
+#### 連接方式
+
+**方式一：使用 VSCode Remote SSH（推薦）**
+```powershell
+.\connect-macincloud.ps1
+```
+
+**方式二：使用 PowerShell 腳本直接打包**
+```powershell
+# Android 打包
+.\build-on-mac.ps1 -Platform android
+
+# iOS 打包
+.\build-on-mac.ps1 -Platform ios
+
+# 同時打包
+.\build-on-mac.ps1 -Platform all
+```
+
+#### 在雲端 Mac 上執行打包
+
+連接後，在終端機中執行：
 ```bash
+cd ~/software2/mobile
+
 # Android APK
 npm run build:android
 
-# iOS (需要 Mac)
+# iOS
 npm run build:ios
+
+# 同時打包
+npm run build:all
+```
+
+#### 首次設定
+
+執行環境設定腳本：
+```powershell
+.\setup-remote-mac.ps1
 ```
 
 ## 環境變數
