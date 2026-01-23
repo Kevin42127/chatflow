@@ -40,29 +40,64 @@ software2/
 git push origin main
 ```
 
-### CI/CD 自動打包 (Azure Pipelines)
+### CI/CD 自動打包 (Azure DevOps)
 
-#### 設定步驟
+#### 快速開始
 
-1. **在 Azure DevOps 建立變數**
+**1. 取得 Expo Access Token**
+- 前往 [Expo 帳號設定](https://expo.dev/accounts/[你的帳號]/settings/access-tokens)
+- 建立新的 Token 並複製
+
+**2. 在 Azure DevOps 設定**
+
+**方式一：使用 Pipeline 變數（推薦，更簡單）**
+
+1. 登入 [dev.azure.com](https://dev.azure.com)
+2. 建立新專案或選擇現有專案
+3. 連接 GitHub Repository：`https://github.com/Kevin42127/chatflow`
+4. 建立 Pipeline：
+   - 前往「Pipelines」→「Pipelines」→「Create Pipeline」
+   - 選擇「Existing Azure Pipelines YAML file」
+   - 選擇分支 `master` 和檔案 `azure-pipelines-no-vargroup.yml`
+5. 設定 Pipeline 變數：
+   - 在 Pipeline 編輯頁面，點擊右上角「...」→「Variables」
+   - 點擊「+」新增變數：
+     - 名稱：`EXPO_TOKEN`
+     - 值：貼上你的 Expo Token
+     - **勾選「Keep this value secret」**
+   - 點擊「Save」
+
+**方式二：使用變數群組**
+
+1. 登入 [dev.azure.com](https://dev.azure.com)
+2. 建立新專案或選擇現有專案
+3. 連接 GitHub Repository：`https://github.com/Kevin42127/chatflow`
+4. 建立變數群組：
+   - 前往「Pipelines」→「Library」
    - 建立變數群組 `expo-variables`
-   - 加入變數 `EXPO_TOKEN`（從 Expo 取得）
+   - 新增變數 `EXPO_TOKEN`（勾選「Keep this value secret」）
+5. 建立 Pipeline：
+   - 前往「Pipelines」→「Pipelines」→「Create Pipeline」
+   - 選擇「Existing Azure Pipelines YAML file」
+   - 選擇分支 `master` 和檔案 `azure-pipelines.yml`
+   - **重要**：在 Pipeline 設定中授權使用 `expo-variables` 變數群組：
+     - 點擊右上角「...」→「Security」
+     - 找到「Variable groups」區塊
+     - 點擊「+」新增 `expo-variables` 群組
+     - 確認已勾選並點擊「Save」
 
-2. **選擇管線範本**
-   - 選擇 **Starter pipeline**
-   - 或選擇 **Existing Azure Pipelines YAML file** 並選擇 `azure-pipelines.yml`
+**3. 執行建置**
 
-3. **使用進階版本（推薦）**
-   - 檔案：`azure-pipelines.yml`
-   - 支援參數選擇平台和設定檔
-   - 包含完整的錯誤處理和建置資訊
+- 點擊「Run pipeline」手動執行
+- 或推送程式碼到 `master` 分支自動觸發
+- 選擇平台：`ios`、`android` 或 `all`
+- 選擇設定檔：`preview`、`production` 或 `development`
 
-4. **使用簡化版本**
-   - 檔案：`azure-pipelines-simple.yml`
-   - 固定打包 Android 和 iOS
-   - 使用 preview 設定檔
+#### 詳細設定指南
 
-#### 建置參數（進階版本）
+完整的設定步驟請參考：[AZURE_DEVOPS_SETUP.md](./AZURE_DEVOPS_SETUP.md)
+
+#### 建置參數
 
 - **平台**: `all` / `android` / `ios`
 - **設定檔**: `preview` / `production` / `development`
@@ -70,8 +105,9 @@ git push origin main
 #### 注意事項
 
 - 需要 Mac 代理（`macos-latest`）進行 iOS 打包
-- 確保 `EXPO_TOKEN` 已正確設定
+- 確保 `EXPO_TOKEN` 已正確設定並設為 Secret
 - 建置會自動等待完成（`--wait` 參數）
+- 建置結果可在 Expo 網站查看
 
 ### 手機應用打包（雲端 Mac）
 
