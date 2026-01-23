@@ -89,13 +89,15 @@ jobs:
           eas build --platform $PLATFORM --profile $PROFILE --non-interactive --wait
 
       - name: Get build info
-        if: always()
+        if: always() && secrets.EXPO_TOKEN != ''
         env:
           EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
         run: |
           PLATFORM="${{ github.event.inputs.platform || 'ios' }}"
-          eas build:list --platform $PLATFORM --limit 1 --json > build-info.json
-          cat build-info.json
+          eas build:list --platform $PLATFORM --limit 1 --json > build-info.json || echo "無法取得建置資訊"
+          if [ -f build-info.json ]; then
+            cat build-info.json
+          fi
 
       - name: Upload build info
         if: always()
