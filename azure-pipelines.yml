@@ -28,11 +28,11 @@ parameters:
 pool:
   vmImage: 'macos-latest'
 
-   variables:
-     - name: nodeVersion
-       value: '18.x'
-     - name: workingDirectory
-       value: 'mobile'
+variables:
+  - name: nodeVersion
+    value: '18.x'
+  - name: workingDirectory
+    value: 'mobile'
 
 stages:
 - stage: Build
