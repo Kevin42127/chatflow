@@ -15,6 +15,14 @@
     {
       "src": "/health",
       "dest": "/backend/server.js"
+    },
+    {
+      "src": "/download",
+      "dest": "/download/index.html"
+    },
+    {
+      "src": "/download/(.*)",
+      "dest": "/download/$1"
     }
   ],
   "env": {
