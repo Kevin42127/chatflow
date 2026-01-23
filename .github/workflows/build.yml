@@ -18,10 +18,9 @@ on:
       platform:
         description: '建置平台'
         required: true
-        default: 'ios'
+        default: 'android'
         type: choice
         options:
-          - ios
           - android
       profile:
         description: '建置設定檔'
@@ -35,7 +34,7 @@ on:
 
 jobs:
   build:
-    name: Build ${{ github.event.inputs.platform || 'ios' }}
+    name: Build ${{ github.event.inputs.platform || 'android' }}
     runs-on: macos-latest
     timeout-minutes: 60
     
@@ -86,7 +85,7 @@ jobs:
         env:
           EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
         run: |
-          PLATFORM="${{ github.event.inputs.platform || 'ios' }}"
+          PLATFORM="${{ github.event.inputs.platform || 'android' }}"
           PROFILE="${{ github.event.inputs.profile || 'preview' }}"
           echo "開始打包 $PLATFORM (設定檔: $PROFILE)..."
           eas build --platform $PLATFORM --profile $PROFILE --non-interactive --wait
@@ -96,7 +95,7 @@ jobs:
         env:
           EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
         run: |
-          PLATFORM="${{ github.event.inputs.platform || 'ios' }}"
+          PLATFORM="${{ github.event.inputs.platform || 'android' }}"
           if [ -z "$EXPO_TOKEN" ]; then
             echo "跳過：EXPO_TOKEN 未設定"
             exit 0
@@ -110,6 +109,6 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: build-info-${{ github.event.inputs.platform || 'ios' }}
+          name: build-info-${{ github.event.inputs.platform || 'android' }}
           path: mobile/build-info.json
           retention-days: 30

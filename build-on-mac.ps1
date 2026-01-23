@@ -1,6 +1,6 @@
 # 在雲端 Mac 上執行打包的腳本
 param(
-    [string]$Platform = "all",
+    [string]$Platform = "android",
     [string]$Profile = "preview",
     [string]$HostName = "macincloud",
     [string]$RemotePath = "~/software2"
@@ -13,16 +13,12 @@ Write-Host ""
 
 $buildCommands = @()
 
-if ($Platform -eq "all" -or $Platform -eq "android") {
+if ($Platform -eq "android") {
     $buildCommands += "cd $RemotePath/mobile && eas build --platform android --profile $Profile"
 }
 
-if ($Platform -eq "all" -or $Platform -eq "ios") {
-    $buildCommands += "cd $RemotePath/mobile && eas build --platform ios --profile $Profile"
-}
-
 if ($buildCommands.Count -eq 0) {
-    Write-Host "錯誤: 無效的平台參數。請使用 'android', 'ios' 或 'all'" -ForegroundColor Red
+    Write-Host "錯誤: 無效的平台參數。請使用 'android'" -ForegroundColor Red
     exit 1
 }
 
