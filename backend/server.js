@@ -12,15 +12,18 @@ app.set('trust proxy', 1);
 
 app.use(cors());
 app.use(express.json());
-app.use(rateLimiter);
 
-app.use('/api', chatRoutes);
+app.use('/api', rateLimiter, chatRoutes);
 
 app.get('/health', (req, res) => {
   res.json({ status: 'ok' });
 });
 
-app.use(express.static(path.join(__dirname, '..')));
+app.use('/assets', express.static(path.join(__dirname, '..', 'mobile', 'assets')));
+
+app.get('/download', (req, res) => {
+  res.sendFile(path.join(__dirname, '..', 'download.html'));
+});
 
 app.get('/download.html', (req, res) => {
   res.sendFile(path.join(__dirname, '..', 'download.html'));
@@ -34,14 +37,12 @@ app.get('/download.js', (req, res) => {
   res.sendFile(path.join(__dirname, '..', 'download.js'));
 });
 
-app.get('/download', (req, res) => {
-  res.sendFile(path.join(__dirname, '..', 'download.html'));
-});
+app.use(express.static(path.join(__dirname, '..')));
 
-app.use('/assets', express.static(path.join(__dirname, '..', 'mobile', 'assets')));
-
-const server = app.listen(PORT, '0.0.0.0', () => {
-  console.log(`Server running on port ${PORT}`);
-});
+if (process.env.NODE_ENV !== 'production' || !process.env.VERCEL) {
+  const server = app.listen(PORT, '0.0.0.0', () => {
+    console.log(`Server running on port ${PORT}`);
+  });
+}
 
 module.exports = app;

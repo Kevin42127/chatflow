@@ -17,12 +17,24 @@
       "destination": "/backend/server.js"
     },
     {
+      "source": "/download.html",
+      "destination": "/backend/server.js"
+    },
+    {
+      "source": "/download.css",
+      "destination": "/backend/server.js"
+    },
+    {
+      "source": "/download.js",
+      "destination": "/backend/server.js"
+    },
+    {
       "source": "/download",
-      "destination": "/download.html"
+      "destination": "/backend/server.js"
     },
     {
       "source": "/assets/(.*)",
-      "destination": "/mobile/assets/$1"
+      "destination": "/backend/server.js"
     }
   ],
   "env": {
