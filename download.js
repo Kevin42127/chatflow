@@ -150,9 +150,10 @@ function toggleNav() {
 
 // 設定下載處理器
 function setupDownloadHandlers() {
-    // iOS 下載 - 禁用狀態
+    // iOS 下載
     const iosDownload = () => {
-        showModal('iOS 版本開發中', 'iOS 版本目前正在開發中，敬請期待！您可以先試用 Android 版本。');
+        const downloadUrl = 'https://drive.google.com/file/d/11bxk_1s3qsdsV6bQ2uJH_XDKciAr0VFZ/view?usp=sharing';
+        window.open(downloadUrl, '_blank');
     };
 
     // Android 下載
