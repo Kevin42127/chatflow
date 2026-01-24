@@ -22,6 +22,7 @@ on:
         type: choice
         options:
           - android
+          - ios
       profile:
         description: '建置設定檔'
         required: true
@@ -88,6 +89,10 @@ jobs:
           PLATFORM="${{ github.event.inputs.platform || 'android' }}"
           PROFILE="${{ github.event.inputs.profile || 'preview' }}"
           echo "開始打包 $PLATFORM (設定檔: $PROFILE)..."
+          if [ "$PLATFORM" = "ios" ]; then
+            echo "⚠️ 注意: iOS 打包需要先設置憑證"
+            echo "請確保已在 Expo 中配置 iOS 憑證，或使用互動模式設置"
+          fi
           eas build --platform $PLATFORM --profile $PROFILE --non-interactive --wait
 
       - name: Get build info

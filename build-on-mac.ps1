@@ -17,8 +17,19 @@ if ($Platform -eq "android") {
     $buildCommands += "cd $RemotePath/mobile && eas build --platform android --profile $Profile"
 }
 
+if ($Platform -eq "ios") {
+    Write-Host "⚠️  注意: iOS 打包需要先設置憑證" -ForegroundColor Yellow
+    Write-Host "請確保已在 Expo 中配置 iOS 憑證" -ForegroundColor Yellow
+    $buildCommands += "cd $RemotePath/mobile && eas build --platform ios --profile $Profile"
+}
+
+if ($Platform -eq "all") {
+    $buildCommands += "cd $RemotePath/mobile && eas build --platform android --profile $Profile"
+    $buildCommands += "cd $RemotePath/mobile && eas build --platform ios --profile $Profile"
+}
+
 if ($buildCommands.Count -eq 0) {
-    Write-Host "錯誤: 無效的平台參數。請使用 'android'" -ForegroundColor Red
+    Write-Host "錯誤: 無效的平台參數。請使用 'android', 'ios' 或 'all'" -ForegroundColor Red
     exit 1
 }
 
