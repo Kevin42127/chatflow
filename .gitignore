@@ -83,3 +83,7 @@ coverage/
 .npm
 .eslintcache
 .stylelintcache
+
+# 打包輸出檔案
+*.zip
+ChatFlow_*.zip
