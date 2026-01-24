@@ -152,8 +152,18 @@ function toggleNav() {
 function setupDownloadHandlers() {
     // iOS 下載
     const iosDownload = () => {
-        const downloadUrl = 'https://drive.google.com/file/d/11bxk_1s3qsdsV6bQ2uJH_XDKciAr0VFZ/view?usp=sharing';
-        window.open(downloadUrl, '_blank');
+        const fileId = '11bxk_1s3qsdsV6bQ2uJH_XDKciAr0VFZ';
+        // 使用 confirm=t 參數跳過 Google Drive 的警告頁面，直接下載
+        const directDownloadUrl = `https://drive.google.com/uc?export=download&confirm=t&id=${fileId}`;
+        
+        // 創建隱藏的下載連結並觸發下載
+        const link = document.createElement('a');
+        link.href = directDownloadUrl;
+        link.download = 'ChatFlow_ios.zip';
+        link.style.display = 'none';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
     };
 
     // Android 下載
