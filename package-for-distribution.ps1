@@ -33,9 +33,6 @@ $itemsToCopy = @(
     "backend",
     "mobile",
     ".github",
-    "download.html",
-    "download.css",
-    "download.js",
     "README.md",
     "vercel.json",
     ".gitignore"
