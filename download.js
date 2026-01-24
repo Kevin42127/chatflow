@@ -152,7 +152,7 @@ function toggleNav() {
 function setupDownloadHandlers() {
     // iOS 下載
     const iosDownload = () => {
-        const fileId = '11bxk_1s3qsdsV6bQ2uJH_XDKciAr0VFZ';
+        const fileId = '1jAN98Nn2lA0coJaSjjeT5Xz9vEaMrkdK';
         // 使用 confirm=t 參數跳過 Google Drive 的警告頁面，直接下載
         const directDownloadUrl = `https://drive.google.com/uc?export=download&confirm=t&id=${fileId}`;
         
